@@ -24,23 +24,42 @@ function myTweets(){
     var params = {screen_name: 'nickclear'};
     client.get('statuses/user_timeline', params, function(error, tweets, response) {
         if (!error) {
-            // console.log(tweets);
-            // console.log(tweets[1]);
-
+            console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            console.log("Here are the 20 most recent tweets..");
             for(var i = 0; i < 20; i++){
-                console.log("=========================")
-                console.log(tweets[i].text);
+                console.log("=========================");
+                console.log('Tweet: ' + tweets[i].text);
+                console.log('Time of tweet: ' + tweets[i].created_at);
             }
-
-
         }
     });
 }
 
 //========================================================================================================================
-// SEARCH
+// SPOTIFY
 //========================================================================================================================
 
-if(process.argv[2] === 'my-tweets'){
-    myTweets();
+function spotifySong(){
+
 };
+
+//========================================================================================================================
+// USER COMMAND LISTENER
+//========================================================================================================================
+
+var command = process.argv[2];
+
+if(command === 'my-tweets'){
+    myTweets();
+}
+else if(command === 'spotify-this-song'){
+
+}
+else if (command === 'movie-this'){
+
+}
+else if(command === 'do-what-it-says'){
+
+} else {
+    console.log('Please type one a proper command.')
+}
