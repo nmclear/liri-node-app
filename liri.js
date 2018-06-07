@@ -8,7 +8,8 @@ var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
 
-
+var nodeArgs = process.argv;
+var command = nodeArgs[2];
 
 //Make it so liri.js can take in one of the ollowing commands
     // my-tweets
@@ -50,13 +51,21 @@ function spotifySong(){
 
 function omdbMovie(){
     //Taking multiple-word movie titles into one string
-    var movieNameArr = [];
-    for(var i = 3; i < process.argv.length; i++){
-        if(process.argv[i]){
-            movieNameArr.push(process.argv[i]);
+    var movieName = '';
+
+    if(nodeArgs.length >= 4){
+        for(var i = 3; i < nodeArgs.length; i++){
+            if(i > 3){
+                movieName = movieName + '+' +nodeArgs[i];
+            } else {
+                movieName += nodeArgs[i];
+            }
         }
+    } else {
+        movieName = 'mr+nobody';
     }
-    var movieName = movieNameArr.join('+');
+
+
     //OMDB API URL
     var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
     //Request movie via OMDB API
@@ -99,7 +108,7 @@ function doWhatItSays(){
 // USER COMMAND LISTENER
 //========================================================================================================================
 
-var command = process.argv[2];
+// var command = process.argv[2];
 
 if(command === 'my-tweets'){
     myTweets();
