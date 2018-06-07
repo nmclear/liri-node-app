@@ -40,8 +40,60 @@ function myTweets(){
 //========================================================================================================================
 
 function spotifySong(){
+    var song = process.argv[3];
+    console.log('hello');
+};
+
+//========================================================================================================================
+// OMDB
+//========================================================================================================================
+
+function omdbMovie(){
+    //Taking multiple-word movie titles into one string
+    var movieNameArr = [];
+    for(var i = 3; i < process.argv.length; i++){
+        if(process.argv[i]){
+            movieNameArr.push(process.argv[i]);
+        }
+    }
+    var movieName = movieNameArr.join('+');
+    //OMDB API URL
+    var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+    //Request movie via OMDB API
+    request(queryUrl, function(error, response, body){
+        //make sure request is successful before proceeding.
+        if (!error && response.statusCode === 200) {
+            var movie = JSON.parse(body);
+            console.log("=========================");
+            console.log('Title: ' + movie.Title);
+            console.log('Release year: ' + movie.Year);
+            console.log('IMDB Rating: ' + movie.Ratings[0].Value);
+            console.log('Rotten Tomatoes Rating: ' + movie.Ratings[1].Value);
+            console.log('Country: ' + movie.Country);
+            console.log('Language: ' + movie.Language);
+            console.log('Plot: ' + movie.Plot);
+            console.log('Actors: ' + movie.Actors);
+            console.log("=========================");
+        }
+    });
+
+
+
+
 
 };
+
+
+
+//========================================================================================================================
+// DO WHAT IT SAYS
+//========================================================================================================================
+
+function doWhatItSays(){
+    console.log('hello');
+};
+
+
 
 //========================================================================================================================
 // USER COMMAND LISTENER
@@ -53,13 +105,13 @@ if(command === 'my-tweets'){
     myTweets();
 }
 else if(command === 'spotify-this-song'){
-
+    spotifySong();
 }
 else if (command === 'movie-this'){
-
+    omdbMovie();
 }
 else if(command === 'do-what-it-says'){
-
+    doWhatItSays();
 } else {
     console.log('Please type one a proper command.')
-}
+};
