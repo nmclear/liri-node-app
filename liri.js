@@ -25,12 +25,14 @@ function myTweets(){
     var params = {screen_name: 'nickclear'};
     client.get('statuses/user_timeline', params, function(error, tweets, response) {
         if (!error) {
-            console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            console.log("Here are the 20 most recent tweets..");
+            console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~" + '\n' +
+                "Here are the 20 most recent tweets.."
+            );
             for(var i = 0; i < 20; i++){
-                console.log("=========================");
-                console.log('Tweet: ' + tweets[i].text);
-                console.log('Time of tweet: ' + tweets[i].created_at);
+                console.log("=========================" + '\n' +
+                    'Tweet: ' + tweets[i].text + '\n' +
+                    'Time of tweet: ' + tweets[i].created_at
+                );
             }
         }
     });
@@ -73,16 +75,27 @@ function omdbMovie(){
         //make sure request is successful before proceeding.
         if (!error && response.statusCode === 200) {
             var movie = JSON.parse(body);
-            console.log("=========================");
-            console.log('Title: ' + movie.Title);
-            console.log('Release year: ' + movie.Year);
-            console.log('IMDB Rating: ' + movie.Ratings[0].Value);
-            console.log('Rotten Tomatoes Rating: ' + movie.Ratings[1].Value);
-            console.log('Country: ' + movie.Country);
-            console.log('Language: ' + movie.Language);
-            console.log('Plot: ' + movie.Plot);
-            console.log('Actors: ' + movie.Actors);
-            console.log("=========================");
+            // console.log("=========================");
+            // console.log('Title: ' + movie.Title);
+            // console.log('Release year: ' + movie.Year);
+            // console.log('IMDB Rating: ' + movie.Ratings[0].Value);
+            // console.log('Rotten Tomatoes Rating: ' + movie.Ratings[1].Value);
+            // console.log('Country: ' + movie.Country);
+            // console.log('Language: ' + movie.Language);
+            // console.log('Plot: ' + movie.Plot);
+            // console.log('Actors: ' + movie.Actors);
+            // console.log("=========================");
+            console.log("=========================" + '\n' +
+                'Title: ' + movie.Title + '\n' +
+                'Release year: ' + movie.Year + '\n' +
+                'IMDB Rating: ' + movie.Ratings[0].Value + '\n' + 
+                'Rotten Tomatoes Rating: ' + movie.Ratings[1].Value + '\n' +
+                'Country: ' + movie.Country + '\n' +
+                'Language: ' + movie.Language + '\n' +
+                'Plot: ' + movie.Plot + '\n' +
+                'Actors: ' + movie.Actors + '\n' +
+                "========================="
+            );
         }
     });
 
