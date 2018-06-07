@@ -17,18 +17,28 @@ var client = new Twitter(keys.twitter);
     // do-what-it-says
 
 
-
+//========================================================================================================================
+// TWITTER
+//========================================================================================================================
 function myTweets(){
     var params = {screen_name: 'nickclear'};
     client.get('statuses/user_timeline', params, function(error, tweets, response) {
         if (!error) {
-            console.log(tweets);
+            // console.log(tweets);
+            // console.log(tweets[1]);
+
+            for(var i = 0; i < 20; i++){
+                console.log("=========================")
+                console.log(tweets[i].text);
+            }
+
+
         }
     });
 }
 
 //========================================================================================================================
-// TWITTER API
+// SEARCH
 //========================================================================================================================
 
 if(process.argv[2] === 'my-tweets'){
