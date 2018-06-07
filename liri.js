@@ -4,6 +4,7 @@ var request = require("request");
 var keys = require("./keys.js");
 var Twitter = require("twitter");
 var Spotify = require("node-spotify-api");
+var fs = require("fs");
 
 var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
@@ -45,6 +46,37 @@ function myTweets(){
 function spotifySong(){
     var song = process.argv[3];
     console.log('hello');
+
+
+    spotify.search({ type: 'track', query: 'All the Small Things', limit: 1 }, function(err, data) {
+        if (err) {
+          return console.log('Error occurred: ' + err);
+        }
+        var songInfo = data.tracks.items[0];
+        var artistInfo = songInfo.artists[0];
+        var albumInfo = songInfo.album;
+    //    var songInfo = JSON.stringify(data);
+    //   console.log(songInfo);
+    //   console.log(songInfo.preview_url);
+    //   console.log(songInfo.external_urls.spotify);
+        // console.log(songInfo[tracks]);
+
+
+      console.log("=========================" + '\n' +
+      'Artist: ' + artistInfo.name + '\n' +
+      'Song Name: ' + songInfo.name + '\n' +
+      'Album Name: ' + albumInfo.name + '\n' +
+      'Preview Link: ' + songInfo.preview_url + '\n' + 
+      'Open Spotify Link: ' + songInfo.external_urls.spotify + '\n' +
+      "========================="
+    );
+
+
+    });
+
+
+
+
 };
 
 //========================================================================================================================
@@ -52,7 +84,6 @@ function spotifySong(){
 //========================================================================================================================
 
 function omdbMovie(){
-    //Taking multiple-word movie titles into one string
     var movieName = '';
 
     if(nodeArgs.length >= 4){
@@ -67,24 +98,10 @@ function omdbMovie(){
         movieName = 'mr+nobody';
     }
 
-
-    //OMDB API URL
     var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
-    //Request movie via OMDB API
     request(queryUrl, function(error, response, body){
-        //make sure request is successful before proceeding.
         if (!error && response.statusCode === 200) {
             var movie = JSON.parse(body);
-            // console.log("=========================");
-            // console.log('Title: ' + movie.Title);
-            // console.log('Release year: ' + movie.Year);
-            // console.log('IMDB Rating: ' + movie.Ratings[0].Value);
-            // console.log('Rotten Tomatoes Rating: ' + movie.Ratings[1].Value);
-            // console.log('Country: ' + movie.Country);
-            // console.log('Language: ' + movie.Language);
-            // console.log('Plot: ' + movie.Plot);
-            // console.log('Actors: ' + movie.Actors);
-            // console.log("=========================");
             console.log("=========================" + '\n' +
                 'Title: ' + movie.Title + '\n' +
                 'Release year: ' + movie.Year + '\n' +
@@ -98,11 +115,6 @@ function omdbMovie(){
             );
         }
     });
-
-
-
-
-
 };
 
 
@@ -113,6 +125,19 @@ function omdbMovie(){
 
 function doWhatItSays(){
     console.log('hello');
+
+
+    fs.readFile("random.txt", "utf8", function(error, data) {
+        if (error) {
+          return console.log(error);
+        }
+      
+        console.log(data);
+      
+      
+    });
+
+
 };
 
 
@@ -120,8 +145,6 @@ function doWhatItSays(){
 //========================================================================================================================
 // USER COMMAND LISTENER
 //========================================================================================================================
-
-// var command = process.argv[2];
 
 if(command === 'my-tweets'){
     myTweets();
@@ -135,5 +158,5 @@ else if (command === 'movie-this'){
 else if(command === 'do-what-it-says'){
     doWhatItSays();
 } else {
-    console.log('Please type one a proper command.')
+    console.log('Please type a proper command.')
 };
