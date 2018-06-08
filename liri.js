@@ -126,9 +126,13 @@ function doWhatItSays(){
     fs.readFile("random.txt", "utf8", function(error, data) {
         if (error) {
           return console.log(error);
+        } else {
+
+            console.log(data);
+            command = 'spotify-this-song';
+
         }
       
-        console.log(data);
       
       
     });
@@ -142,17 +146,41 @@ function doWhatItSays(){
 // USER COMMAND LISTENER
 //========================================================================================================================
 
-if(command === 'my-tweets'){
-    myTweets();
+// if(command === 'my-tweets'){
+//     myTweets();
+// }
+// else if(command === 'spotify-this-song'){
+//     spotifySong();
+// }
+// else if (command === 'movie-this'){
+//     omdbMovie();
+// }
+// else if(command === 'do-what-it-says'){
+//     doWhatItSays();
+// } else {
+//     console.log('Please type a proper command.')
+// };
+
+switch(command){
+    case "my-tweets":
+        myTweets();
+    break;
+    case "spotify-this-song":
+        spotfiySong();
+    break;
+    case "movie-this":
+        omdbMovie();
+    break;
+    case "do-what-it-says":
+        doWhatItSays();
+    break;
+    default:
+        console.log('=========================' + '\n' +
+            'Please type a proper command.' + '\n' +
+            'my-tweets' + '\n' +
+            'spotify-this-song <song name here>' + '\n' +
+            'movie-this <movie name here>' + '\n' +
+            'do-what-it-says' + '\n' +
+            '========================='
+        );
 }
-else if(command === 'spotify-this-song'){
-    spotifySong();
-}
-else if (command === 'movie-this'){
-    omdbMovie();
-}
-else if(command === 'do-what-it-says'){
-    doWhatItSays();
-} else {
-    console.log('Please type a proper command.')
-};
