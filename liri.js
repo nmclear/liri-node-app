@@ -23,11 +23,11 @@ var command = nodeArgs[2];
 // TWITTER
 //========================================================================================================================
 function myTweets(){
-    var params = {screen_name: 'nickclear'};
+    var params = {screen_name: 'brewersassoc'};
     client.get('statuses/user_timeline', params, function(error, tweets, response) {
         if (!error) {
             console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~" + '\n' +
-                "Here are the 20 most recent tweets.."
+                "Here are the 20 most recent tweets of Brewers Association.."
             );
             for(var i = 0; i < 20; i++){
                 console.log("=========================" + '\n' +
@@ -43,7 +43,7 @@ function myTweets(){
 // SPOTIFY
 //========================================================================================================================
 
-function spotifySong(){
+function spotifySong(input){
     var songName = '';
 
     if(nodeArgs.length > 3){
@@ -54,6 +54,8 @@ function spotifySong(){
                 songName += nodeArgs[i];
             }
         }
+    } else if(input){
+        songName = input;
     } else {
         songName = 'The Sign ace of base';
     }
@@ -128,8 +130,18 @@ function doWhatItSays(){
           return console.log(error);
         } else {
 
+            // data{
+            //     command: 'spotify-this-song',
+            //     song: 
+            // }
+            console.log('step is working');
             console.log(data);
-            command = 'spotify-this-song';
+
+            var dataArr = data.split(',');
+            command = dataArr[0];
+            input = dataArr[1];
+            console.log(command);
+            checkSwitch(command, input);
 
         }
       
@@ -160,27 +172,31 @@ function doWhatItSays(){
 // } else {
 //     console.log('Please type a proper command.')
 // };
+function checkSwitch(command,input){
 
-switch(command){
-    case "my-tweets":
-        myTweets();
-    break;
-    case "spotify-this-song":
-        spotfiySong();
-    break;
-    case "movie-this":
-        omdbMovie();
-    break;
-    case "do-what-it-says":
-        doWhatItSays();
-    break;
-    default:
-        console.log('=========================' + '\n' +
-            'Please type a proper command.' + '\n' +
-            'my-tweets' + '\n' +
-            'spotify-this-song <song name here>' + '\n' +
-            'movie-this <movie name here>' + '\n' +
-            'do-what-it-says' + '\n' +
-            '========================='
-        );
+    switch(command){
+        case "my-tweets":
+            myTweets();
+        break;
+        case "spotify-this-song":
+            spotifySong(input);
+        break;
+        case "movie-this":
+            omdbMovie();
+        break;
+        case "do-what-it-says":
+            doWhatItSays();
+        break;
+        default:
+            console.log('=========================' + '\n' +
+                'Please type a proper command.' + '\n' +
+                'my-tweets' + '\n' +
+                'spotify-this-song <song name here>' + '\n' +
+                'movie-this <movie name here>' + '\n' +
+                'do-what-it-says' + '\n' +
+                '========================='
+            );
+    }
 }
+
+checkSwitch(command);
