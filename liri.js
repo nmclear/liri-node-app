@@ -44,39 +44,37 @@ function myTweets(){
 //========================================================================================================================
 
 function spotifySong(){
-    var song = process.argv[3];
-    console.log('hello');
+    var songName = '';
 
+    if(nodeArgs.length > 3){
+        for(var i = 3; i < nodeArgs.length; i++){
+            if(i > 3){
+                songName = songName + ' ' + nodeArgs[i];
+            } else {
+                songName += nodeArgs[i];
+            }
+        }
+    } else {
+        songName = 'The Sign ace of base';
+    }
 
-    spotify.search({ type: 'track', query: 'All the Small Things', limit: 1 }, function(err, data) {
+    spotify.search({ type: 'track', query: songName, limit: 1 }, function(err, data) {
         if (err) {
           return console.log('Error occurred: ' + err);
         }
         var songInfo = data.tracks.items[0];
         var artistInfo = songInfo.artists[0];
         var albumInfo = songInfo.album;
-    //    var songInfo = JSON.stringify(data);
-    //   console.log(songInfo);
-    //   console.log(songInfo.preview_url);
-    //   console.log(songInfo.external_urls.spotify);
-        // console.log(songInfo[tracks]);
 
-
-      console.log("=========================" + '\n' +
-      'Artist: ' + artistInfo.name + '\n' +
-      'Song Name: ' + songInfo.name + '\n' +
-      'Album Name: ' + albumInfo.name + '\n' +
-      'Preview Link: ' + songInfo.preview_url + '\n' + 
-      'Open Spotify Link: ' + songInfo.external_urls.spotify + '\n' +
-      "========================="
-    );
-
-
+        console.log("=========================" + '\n' +
+            'Artist: ' + artistInfo.name + '\n' +
+            'Song Name: ' + songInfo.name + '\n' +
+            'Album Name: ' + albumInfo.name + '\n' +
+            'Preview Link: ' + songInfo.preview_url + '\n' + 
+            'Open Spotify Link: ' + songInfo.external_urls.spotify + '\n' +
+            "========================="
+        );
     });
-
-
-
-
 };
 
 //========================================================================================================================
@@ -116,8 +114,6 @@ function omdbMovie(){
         }
     });
 };
-
-
 
 //========================================================================================================================
 // DO WHAT IT SAYS
