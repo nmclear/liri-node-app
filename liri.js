@@ -15,6 +15,7 @@ var command = nodeArgs[2];
 //========================================================================================================================
 // TWITTER
 //========================================================================================================================
+
 function myTweets(){
     var params = {screen_name: 'brewersassoc'};
     client.get('statuses/user_timeline', params, function(error, tweets, response) {
@@ -61,12 +62,18 @@ function spotifySong(input){
         var artistInfo = songInfo.artists[0];
         var albumInfo = songInfo.album;
 
+        var spotifyInfo = [
+            'Artist: ' + artistInfo.name,
+            'Song Name: ' + songInfo.name,
+            'Album Name: ' + albumInfo.name,
+            'Preview Link: ' + songInfo.preview_url,
+            'Open Spotify Link: ' + songInfo.external_urls.spotify
+        ].join('\n');
+
+        appendToLog(spotifyInfo);
+
         console.log("=========================" + '\n' +
-            'Artist: ' + artistInfo.name + '\n' +
-            'Song Name: ' + songInfo.name + '\n' +
-            'Album Name: ' + albumInfo.name + '\n' +
-            'Preview Link: ' + songInfo.preview_url + '\n' + 
-            'Open Spotify Link: ' + songInfo.external_urls.spotify + '\n' +
+            spotifyInfo + '\n' +
             "========================="
         );
     });
@@ -95,15 +102,20 @@ function omdbMovie(){
     request(queryUrl, function(error, response, body){
         if (!error && response.statusCode === 200) {
             var movie = JSON.parse(body);
+
+            var movieInfo = [
+                'Title: ' + movie.Title,
+                'Release year: ' + movie.Year,
+                'IMDB Rating: ' + movie.Ratings[0].Value,
+                'Rotten Tomatoes Rating: ' + movie.Ratings[1].Value,
+                'Country: ' + movie.Country,
+                'Language: ' + movie.Language,
+                'Plot: ' + movie.Plot,
+                'Actors: ' + movie.Actors
+            ].join('\n');
+            appendToLog(movieInfo);
             console.log("=========================" + '\n' +
-                'Title: ' + movie.Title + '\n' +
-                'Release year: ' + movie.Year + '\n' +
-                'IMDB Rating: ' + movie.Ratings[0].Value + '\n' + 
-                'Rotten Tomatoes Rating: ' + movie.Ratings[1].Value + '\n' +
-                'Country: ' + movie.Country + '\n' +
-                'Language: ' + movie.Language + '\n' +
-                'Plot: ' + movie.Plot + '\n' +
-                'Actors: ' + movie.Actors + '\n' +
+                movieInfo + '\n' +
                 "========================="
             );
         }
@@ -127,6 +139,19 @@ function doWhatItSays(){
     });
 };
 
+//========================================================================================================================
+// APPEND TO LOG.TXT FUNCTION
+//========================================================================================================================
+
+function appendToLog(dataLog){
+    var divider = "\n===================================\n\n";
+    fs.appendFile("log.txt", dataLog + divider, function(err) {
+        if (err) {
+          return console.log(err);
+        }
+        console.log("log.txt was updated!");
+    });
+}
 //========================================================================================================================
 // USER COMMAND LISTENER
 //========================================================================================================================
@@ -162,3 +187,4 @@ function checkSwitch(command,input){
 //========================================================================================================================
 
 checkSwitch(command);
+
