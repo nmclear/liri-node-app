@@ -12,13 +12,6 @@ var client = new Twitter(keys.twitter);
 var nodeArgs = process.argv;
 var command = nodeArgs[2];
 
-//Make it so liri.js can take in one of the ollowing commands
-    // my-tweets
-    // spotify-this-song
-    // movie-this
-    // do-what-it-says
-
-
 //========================================================================================================================
 // TWITTER
 //========================================================================================================================
@@ -122,58 +115,23 @@ function omdbMovie(){
 //========================================================================================================================
 
 function doWhatItSays(){
-    console.log('hello');
-
-
     fs.readFile("random.txt", "utf8", function(error, data) {
         if (error) {
           return console.log(error);
         } else {
-
-            // data{
-            //     command: 'spotify-this-song',
-            //     song: 
-            // }
-            console.log('step is working');
-            console.log(data);
-
             var dataArr = data.split(',');
             command = dataArr[0];
             input = dataArr[1];
-            console.log(command);
             checkSwitch(command, input);
-
         }
-      
-      
-      
     });
-
-
 };
-
-
 
 //========================================================================================================================
 // USER COMMAND LISTENER
 //========================================================================================================================
 
-// if(command === 'my-tweets'){
-//     myTweets();
-// }
-// else if(command === 'spotify-this-song'){
-//     spotifySong();
-// }
-// else if (command === 'movie-this'){
-//     omdbMovie();
-// }
-// else if(command === 'do-what-it-says'){
-//     doWhatItSays();
-// } else {
-//     console.log('Please type a proper command.')
-// };
 function checkSwitch(command,input){
-
     switch(command){
         case "my-tweets":
             myTweets();
@@ -188,15 +146,19 @@ function checkSwitch(command,input){
             doWhatItSays();
         break;
         default:
-            console.log('=========================' + '\n' +
-                'Please type a proper command.' + '\n' +
-                'my-tweets' + '\n' +
-                'spotify-this-song <song name here>' + '\n' +
-                'movie-this <movie name here>' + '\n' +
-                'do-what-it-says' + '\n' +
-                '========================='
-            );
+        console.log('=========================' + '\n' +
+            'Please type a proper command.' + '\n' +
+            'my-tweets' + '\n' +
+            'spotify-this-song <song name here>' + '\n' +
+            'movie-this <movie name here>' + '\n' +
+            'do-what-it-says' + '\n' +
+            '========================='
+        );
     }
 }
+
+//========================================================================================================================
+// START APP
+//========================================================================================================================
 
 checkSwitch(command);
